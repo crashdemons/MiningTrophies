@@ -6,7 +6,7 @@ When a player is very fortunate when mining certain blocks, this plugin drops a 
 Drop rates are configurable, 
 
 ## Drop rate modificiation
-All drop-rates can be changed in the `config.yml` for this plugin, as well as the rate at which the Fortune enchantment increases the droprate.
+All drop-rates can be changed for this plugin, as well as the rate at which the Fortune enchantment increases the droprate.
 
 Each level of the Fortune modification adds 20% of the base droprate by default. 
 
