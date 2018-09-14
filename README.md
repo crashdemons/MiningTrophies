@@ -14,6 +14,10 @@ For example, a droprate of 5% (0.05) would increase to 6% with Fortune I, 7% wit
 
 By default, droprates are set to 0.01% chance per mined block, but are easily configured.
 
+To change the droprate of blocks change the appropriate `<blockname>droprate` entry in config.yml.
+
+To change the rate at which fortune affects the droprate change `fortunerate` entry in config.yml
+
 ## Dropped items
 ![Image of Perfect Diamond](https://i.imgur.com/p7SmE0E.png)
 
