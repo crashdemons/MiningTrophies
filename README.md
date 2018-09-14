@@ -25,11 +25,11 @@ Blocked Mined | Trophy received | Trophy type
 ------------- | ------------- | -------------
 Diamond Ore | "Perfect Diamond" | named diamond with enchanted appearance
 Emerald Ore | "Perfect Emerald" | named emerald with enchanted appearance
-Redstone Ore | "Sparking Redstone" | named redstone with enchanted appearance
+Redstone Ore | "Sparking Redstone" | named redstone dust with enchanted appearance
 Lapis Ore | "Marbled Lapis" | named lapis lazuli with enchanted appearance
-Nether Quartz Ore | "Rose-Quartz" | named quartz with enchanted appearance
-Clay | "Pure Clay" | named clay with enchanted appearance
-Glowstone | "Burning Glowstone" | named glowstone with enchanted appearance
+Nether Quartz Ore | "Rose-Quartz" | named quartz item with enchanted appearance
+Clay | "Pure Clay" | named clay ball with enchanted appearance
+Glowstone | "Burning Glowstone" | named glowstone dust with enchanted appearance
 Turtle Egg | "Scute of Shame" | named scute with enchanted appearance and description
 Glass | "What-a-Pane" | named glass pane with enchanted appearance and description - for griefers
 
