@@ -1,0 +1,38 @@
+name: MiningTrophies
+main: com.github.crashdemons.miningtrophies.MiningTrophies
+version: 0.4-alpha
+author: crashdemons
+api-version: 1.13
+description: Drops rare trophies from mining
+website: https://github.com/crashdemons
+
+
+
+
+commands:
+  MiningTrophies:
+    description: Spawn a miningtrophie or edit miningtrophies config
+    aliases: [mt,miningtrophy]
+    
+permissions:
+  miningtrophies.*:
+    description: Gives all MiningTrophies permissions
+    default: false
+    children:
+      miningtrophies.config.*: true
+      miningtrophies.canberewarded: true
+      miningtrophies.alwaysrewarded: true
+  miningtrophies.config.*:
+    description: Allows user to edit, save, or reload configs
+    default: op
+    children:
+      miningtrophies.config.reload: true
+  miningtrophies.config.reload:
+    description: Allows user to reload configs
+    default: op
+  miningtrophies.canberewarded:
+    description: User can be rewarded for mining with trophies
+    default: true
+  miningtrophies.alwaysrewarded:
+    description: Ignore drop rate for trophies and drop 100% of the time
+    default: false
