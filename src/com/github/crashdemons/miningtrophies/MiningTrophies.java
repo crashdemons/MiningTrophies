@@ -90,11 +90,11 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         
         //check drop rates
-        Double droproll = rand.nextDouble() * fortunerate;
+        Double droproll = rand.nextDouble();
         Double droprate = getConfig().getDouble( type.getDropConfigName() );
         if(droprate==0.0) return;
         if(player.hasPermission("miningtrophies.alwaysrewarded")) droproll=0.00;//this player always gets good rolls.
-        if(droproll >= droprate) return;//bad roll
+        if(droproll >= (droprate*fortunerate)) return;//bad roll
         
         
         
