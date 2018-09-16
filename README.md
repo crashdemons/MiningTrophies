@@ -21,7 +21,7 @@ To change the rate at which fortune affects the droprate change `fortunerate` en
 ## Dropped items
 ![Image of Perfect Diamond](https://i.imgur.com/p7SmE0E.png)
 
-Blocked Mined | Trophy received | Trophy type
+Block Mined | Trophy received | Trophy type
 ------------- | ------------- | -------------
 Diamond Ore | "Perfect Diamond" | named diamond with enchanted appearance
 Emerald Ore | "Perfect Emerald" | named emerald with enchanted appearance
