@@ -5,6 +5,7 @@
  */
 package com.github.crashdemons.miningtrophies;
 
+import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -15,8 +16,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -67,8 +71,9 @@ public class MiningTrophies extends JavaPlugin implements Listener{
     
     
     
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreakEvent(BlockBreakEvent event){
+        if(event instanceof SimulatedBlockBreakEvent) return;
         Block block = event.getBlock();
         if(block==null) return;
         TrophyType type = TrophyType.get(block.getType());
@@ -78,6 +83,20 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         if(event.isCancelled()) return;
         if (player.getGameMode() == GameMode.CREATIVE) return;//players in creative destroy blocks, they don't mine them.
         if(!player.hasPermission("miningtrophies.canberewarded")) return;//can't get rewards
+        
+        org.bukkit.plugin.PluginManager pm = getServer().getPluginManager();
+        pm.callEvent(new PlayerAnimationEvent(player));
+        pm.callEvent(new BlockDamageEvent(player, block, player.getEquipment().getItemInMainHand(), true));
+        SimulatedBlockBreakEvent simulatedbreak = new SimulatedBlockBreakEvent(block, player);
+        pm.callEvent(simulatedbreak);
+
+        if (simulatedbreak.isCancelled()) {
+            event.setCancelled(true);
+            return;
+        }
+        
+        
+        
         
         
         ItemStack tool = player.getEquipment().getItemInMainHand();
