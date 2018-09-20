@@ -1,6 +1,6 @@
 name: MiningTrophies
 main: com.github.crashdemons.miningtrophies.MiningTrophies
-version: 0.6-slpha
+version: ${project.version}
 author: crashdemons
 api-version: 1.13
 description: Drops rare trophies from mining
