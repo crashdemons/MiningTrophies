@@ -45,3 +45,16 @@ Glass | "What-a-Pane" | named glass pane with enchanted appearance and descripti
 Only players in survival or adventure modes can gain rewards.
 Use of silktouch tools and shears are disabled so that the block must be actually broken for a reward to be dropped.
 
+
+
+
+# Downloading the Plugin
+You can find released JARs (that can be added to your plugins folder) on the [Releases tab](https://github.com/crashdemons/MiningTrophies/releases) of this project.
+
+If you want something a bit more shiny, you can check out our [development builds](https://ci.meme.tips/job/MiningTrophies/) available through Jenkins CI.
+
+# Building the Project yourself
+We've recently moved to using Maven! If you used build.xml or a Netbeans Project before, you may need to import the project again as a maven project / from existing POM.
+
+[This document](https://github.com/crashdemons/Notes/blob/master/Importing_Maven_Projects.md) may help you import the project in your IDE.
+
