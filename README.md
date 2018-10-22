@@ -48,7 +48,7 @@ Use of silktouch tools and shears are disabled so that the block must be actuall
 
 
 
-# Downloading the Plugin
+# Downloading the Plugin pre-built
 You can find released JARs (that can be added to your plugins folder) on the [Releases tab](https://github.com/crashdemons/MiningTrophies/releases) of this project.
 
 If you want something a bit more shiny, you can check out our [development builds](https://ci.meme.tips/job/MiningTrophies/) available through Jenkins CI.
