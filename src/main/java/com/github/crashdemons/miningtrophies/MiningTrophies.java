@@ -92,9 +92,9 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         boolean wasExemptFromNCP = true;
         if (NCPEnabled) {
             wasExemptFromNCP = NCPExemptionManager.isExempted(player, CheckType.BLOCKBREAK_FASTBREAK);
-            getLogger().info("NCP Exemption: "+wasExemptFromNCP);
+            //getLogger().info("NCP Exemption: "+wasExemptFromNCP);
             if (!wasExemptFromNCP){
-                getLogger().info("NCP Exemption added");
+                //getLogger().info("NCP Exemption added");
                 NCPExemptionManager.exemptPermanently(player, CheckType.BLOCKBREAK_FASTBREAK);
             }
         }
@@ -105,7 +105,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         if (NCPEnabled && !wasExemptFromNCP){
             NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
-            getLogger().info("NCP Exemption removed");
+            //getLogger().info("NCP Exemption removed");
         }
         
         return simulatedbreak;
@@ -141,13 +141,13 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         if(droprate==0.0) return;
         if(player.hasPermission("miningtrophies.alwaysrewarded")) droproll=0.00;//this player always gets good rolls.
         if(droproll >= (droprate*fortunerate)){//bad roll
-            getLogger().info("Roll wasn't lucky");
+            //getLogger().info("Roll wasn't lucky");
             return;
         }
         
         
         if(simlateBlockBreak(player, block).isCancelled()){
-            getLogger().info("Simulated block break cancelled.");
+            //getLogger().info("Simulated block break cancelled.");
             event.setCancelled(true);
             return;
         }
@@ -158,7 +158,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         BlockDropTrophyEvent trophyEvent = new BlockDropTrophyEvent(block,player,item);
         getServer().getPluginManager().callEvent(trophyEvent);
         if (trophyEvent.isCancelled()){//another plugin caught and cancelled the trophy event - don't drop.
-            getLogger().info("Trophy event cancelled.");
+            //getLogger().info("Trophy event cancelled.");
             return;
         }
         
