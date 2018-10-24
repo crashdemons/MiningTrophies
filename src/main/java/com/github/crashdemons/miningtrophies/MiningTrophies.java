@@ -87,22 +87,28 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         return false;
     }
     
-    private boolean simlateBlockBreak(Player player, Block block){
+    private SimulatedBlockBreakEvent simlateBlockBreak(Player player, Block block){
         PluginManager pm = getServer().getPluginManager();
         boolean wasExemptFromNCP = true;
         if (NCPEnabled) {
             wasExemptFromNCP = NCPExemptionManager.isExempted(player, CheckType.BLOCKBREAK_FASTBREAK);
-            if (!wasExemptFromNCP) NCPExemptionManager.exemptPermanently(player, CheckType.BLOCKBREAK_FASTBREAK);
+            getLogger().info("NCP Exemption: "+wasExemptFromNCP);
+            if (!wasExemptFromNCP){
+                getLogger().info("NCP Exemption added");
+                NCPExemptionManager.exemptPermanently(player, CheckType.BLOCKBREAK_FASTBREAK);
+            }
         }
         pm.callEvent(new PlayerAnimationEvent(player));
         pm.callEvent(new BlockDamageEvent(player, block, player.getEquipment().getItemInMainHand(), true));
         SimulatedBlockBreakEvent simulatedbreak = new SimulatedBlockBreakEvent(block, player);
         pm.callEvent(simulatedbreak);
         
-        if (NCPEnabled && !wasExemptFromNCP) NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
+        if (NCPEnabled && !wasExemptFromNCP){
+            NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
+            getLogger().info("NCP Exemption removed");
+        }
         
-        
-        return !simulatedbreak.isCancelled();
+        return simulatedbreak;
     }
     
     
@@ -119,7 +125,8 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         if (player.getGameMode() == GameMode.CREATIVE) return;//players in creative destroy blocks, they don't mine them.
         if(!player.hasPermission("miningtrophies.canberewarded")) return;//can't get rewards
         
-        if(!simlateBlockBreak(player, block)){
+        if(simlateBlockBreak(player, block).isCancelled()){
+            getLogger().info("Simulated block break cancelled.");
             event.setCancelled(true);
             return;
         }
@@ -149,9 +156,10 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         getServer().getPluginManager().callEvent(trophyEvent);
         if (trophyEvent.isCancelled()) return;//another plugin caught and cancelled the trophy event - don't drop.
         
-        
-        
         Location location = block.getLocation();
+        
+        event.setCancelled(true);
+        block.setType(Material.AIR);
         location.getWorld().dropItemNaturally(location, item);
         
     }
