@@ -10,7 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 
 /**
- *
+ * An event used by the plugin to detect if a hypothetical BlockBreak would be cancelled, potentially from protection plugins.
+ * 
+ * Generally, this should not be used unless entirely necessary.
  * @author crash
  */
 public class SimulatedBlockBreakEvent extends BlockBreakEvent {

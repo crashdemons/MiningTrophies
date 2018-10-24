@@ -5,6 +5,7 @@
  */
 package com.github.crashdemons.miningtrophies;
 
+import com.github.crashdemons.miningtrophies.events.BlockDropTrophyEvent;
 import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
 import java.util.Random;
 import org.bukkit.GameMode;
@@ -118,6 +119,14 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         
         ItemStack item = type.createDrop();
+        
+        
+        BlockDropTrophyEvent trophyEvent = new BlockDropTrophyEvent(block,player,item);
+        getServer().getPluginManager().callEvent(trophyEvent);
+        if (trophyEvent.isCancelled()) return;//another plugin caught and cancelled the trophy event - don't drop.
+        
+        
+        
         Location location = block.getLocation();
         location.getWorld().dropItemNaturally(location, item);
         
