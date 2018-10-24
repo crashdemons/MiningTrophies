@@ -125,11 +125,6 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         if (player.getGameMode() == GameMode.CREATIVE) return;//players in creative destroy blocks, they don't mine them.
         if(!player.hasPermission("miningtrophies.canberewarded")) return;//can't get rewards
         
-        if(simlateBlockBreak(player, block).isCancelled()){
-            getLogger().info("Simulated block break cancelled.");
-            event.setCancelled(true);
-            return;
-        }
         
         ItemStack tool = player.getEquipment().getItemInMainHand();
         double fortunerate=1;
@@ -145,16 +140,27 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         Double droprate = getConfig().getDouble( type.getDropConfigName() );
         if(droprate==0.0) return;
         if(player.hasPermission("miningtrophies.alwaysrewarded")) droproll=0.00;//this player always gets good rolls.
-        if(droproll >= (droprate*fortunerate)) return;//bad roll
+        if(droproll >= (droprate*fortunerate)){//bad roll
+            getLogger().info("Roll wasn't lucky");
+            return;
+        }
         
+        
+        if(simlateBlockBreak(player, block).isCancelled()){
+            getLogger().info("Simulated block break cancelled.");
+            event.setCancelled(true);
+            return;
+        }
         
         
         ItemStack item = type.createDrop();
         
-        
         BlockDropTrophyEvent trophyEvent = new BlockDropTrophyEvent(block,player,item);
         getServer().getPluginManager().callEvent(trophyEvent);
-        if (trophyEvent.isCancelled()) return;//another plugin caught and cancelled the trophy event - don't drop.
+        if (trophyEvent.isCancelled()){//another plugin caught and cancelled the trophy event - don't drop.
+            getLogger().info("Trophy event cancelled.");
+            return;
+        }
         
         Location location = block.getLocation();
         
