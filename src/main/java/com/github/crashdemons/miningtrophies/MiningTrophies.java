@@ -102,7 +102,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         if (NCPEnabled && !wasExemptFromNCP) NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
         
         
-        return simulatedbreak.isCancelled();
+        return !simulatedbreak.isCancelled();
     }
     
     
