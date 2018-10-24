@@ -16,6 +16,13 @@
         <url>https://github.com/crashdemons</url>
     </organization>
     
+    <licenses>
+      <license>
+        <name>Mozilla Public License 2.0</name>
+        <url>http://mozilla.org/MPL/2.0/</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
     
     <scm>
         <developerConnection>scm:git:git@github.com:crashdemons/MiningTrophies.git</developerConnection>
