@@ -58,3 +58,21 @@ We've recently moved to using Maven! If you used build.xml or a Netbeans Project
 
 [This document](https://github.com/crashdemons/Notes/blob/master/Importing_Maven_Projects.md) may help you import the project in your IDE.
 
+# API
+
+You can build your own plugins against MiningTrophies by including the following in your configuration.
+
+Respositories:
+
+        <repository>
+            <id>crashdemons-repo</id>
+            <url>https://meme.tips/java-repos/</url>
+        </repository>
+        
+Depend on MiningTrophies:
+
+        <dependency>
+            <groupId>com.github.crashdemons</groupId>
+            <artifactId>MiningTrophies</artifactId>
+            <version>0.6.1-SNAPSHOT</version>
+        </dependency>
