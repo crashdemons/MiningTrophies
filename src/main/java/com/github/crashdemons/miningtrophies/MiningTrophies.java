@@ -53,6 +53,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         if (getServer().getPluginManager().getPlugin("NoCheatPlus") != null) {
             NCPEnabled = true;
+            getLogger().info("NCP Support Enabled");
         }
         
         getServer().getPluginManager().registerEvents(this, this);
@@ -87,29 +88,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         return false;
     }
     
-    private SimulatedBlockBreakEvent simlateBlockBreak(Player player, Block block){
-        PluginManager pm = getServer().getPluginManager();
-        boolean wasExemptFromNCP = true;
-        if (NCPEnabled) {
-            wasExemptFromNCP = NCPExemptionManager.isExempted(player, CheckType.BLOCKBREAK_FASTBREAK);
-            //getLogger().info("NCP Exemption: "+wasExemptFromNCP);
-            if (!wasExemptFromNCP){
-                //getLogger().info("NCP Exemption added");
-                NCPExemptionManager.exemptPermanently(player, CheckType.BLOCKBREAK_FASTBREAK);
-            }
-        }
-        pm.callEvent(new PlayerAnimationEvent(player));
-        pm.callEvent(new BlockDamageEvent(player, block, player.getEquipment().getItemInMainHand(), true));
-        SimulatedBlockBreakEvent simulatedbreak = new SimulatedBlockBreakEvent(block, player);
-        pm.callEvent(simulatedbreak);
-        
-        if (NCPEnabled && !wasExemptFromNCP){
-            NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
-            //getLogger().info("NCP Exemption removed");
-        }
-        
-        return simulatedbreak;
-    }
+
     
     
     @EventHandler(priority = EventPriority.LOWEST)
@@ -146,7 +125,30 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         }
         
         
-        if(simlateBlockBreak(player, block).isCancelled()){
+        PluginManager pm = getServer().getPluginManager();
+        boolean wasExemptFromNCP = true;
+        if (NCPEnabled) {
+            wasExemptFromNCP = NCPExemptionManager.isExempted(player, CheckType.BLOCKBREAK_FASTBREAK);
+            //getLogger().info("NCP Exemption: "+wasExemptFromNCP);
+            if (!wasExemptFromNCP){
+                //getLogger().info("NCP Exemption added");
+                NCPExemptionManager.exemptPermanently(player, CheckType.BLOCKBREAK_FASTBREAK);
+            }
+        }
+        pm.callEvent(new PlayerAnimationEvent(player));
+        pm.callEvent(new BlockDamageEvent(player, block, player.getEquipment().getItemInMainHand(), true));
+        SimulatedBlockBreakEvent simulatedbreak = new SimulatedBlockBreakEvent(block, player);
+        pm.callEvent(simulatedbreak);
+        
+        if (NCPEnabled && !wasExemptFromNCP){
+            NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
+            //getLogger().info("NCP Exemption removed");
+        }
+        
+        
+        
+        
+        if(simulatedbreak.isCancelled()){
             //getLogger().info("Simulated block break cancelled.");
             event.setCancelled(true);
             return;
@@ -164,8 +166,9 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         Location location = block.getLocation();
         
-        event.setCancelled(true);
-        block.setType(Material.AIR);
+        //event.setCancelled(true);
+        //getLogger().info("Original break cancelled? "+event.isCancelled());
+        //block.setType(Material.AIR);
         location.getWorld().dropItemNaturally(location, item);
         
     }
