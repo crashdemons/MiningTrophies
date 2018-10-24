@@ -166,6 +166,10 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         Location location = block.getLocation();
         
+        if(NCPEnabled){//NCP seems to disable the block-break without cancelling it, but allows the drops.
+            event.setCancelled(true);
+            block.setType(Material.AIR);
+        }
         //event.setCancelled(true);
         //getLogger().info("Original break cancelled? "+event.isCancelled());
         //block.setType(Material.AIR);
