@@ -46,6 +46,21 @@
             <artifactId>bukkit</artifactId>
             <version>1.13.1-R0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>fr.neatmonster</groupId>
+            <artifactId>ncpplugin</artifactId>
+            <version>static</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
     
     <build>

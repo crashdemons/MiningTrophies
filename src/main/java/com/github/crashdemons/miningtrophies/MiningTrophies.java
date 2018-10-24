@@ -7,6 +7,8 @@ package com.github.crashdemons.miningtrophies;
 
 import com.github.crashdemons.miningtrophies.events.BlockDropTrophyEvent;
 import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
+import fr.neatmonster.nocheatplus.checks.CheckType;
+import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 import java.util.Random;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,6 +25,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -33,11 +36,25 @@ public class MiningTrophies extends JavaPlugin implements Listener{
 
     private final Random rand = new Random();
     
+    private boolean NCPEnabled = false;
+    
+    /**
+     * Checks whether the plugin has detected NoCheatPlus and will attempt to support it.
+     * @return whether nocheatplus was detected
+     */
+    public boolean isNCPEnabled(){ return NCPEnabled; }
+    
+    
     @Override
     public void onEnable(){
         getLogger().info("Enabling...");
         saveDefaultConfig();
         reloadConfig();
+        
+        if (getServer().getPluginManager().getPlugin("NoCheatPlus") != null) {
+            NCPEnabled = true;
+        }
+        
         getServer().getPluginManager().registerEvents(this, this);
         getLogger().info("Enabled.");
         
@@ -70,6 +87,23 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         return false;
     }
     
+    private boolean simlateBlockBreak(Player player, Block block){
+        PluginManager pm = getServer().getPluginManager();
+        boolean wasExemptFromNCP = true;
+        if (NCPEnabled) {
+            wasExemptFromNCP = NCPExemptionManager.isExempted(player, CheckType.BLOCKBREAK_FASTBREAK);
+            if (!wasExemptFromNCP) NCPExemptionManager.exemptPermanently(player, CheckType.BLOCKBREAK_FASTBREAK);
+        }
+        pm.callEvent(new PlayerAnimationEvent(player));
+        pm.callEvent(new BlockDamageEvent(player, block, player.getEquipment().getItemInMainHand(), true));
+        SimulatedBlockBreakEvent simulatedbreak = new SimulatedBlockBreakEvent(block, player);
+        pm.callEvent(simulatedbreak);
+        
+        if (NCPEnabled && !wasExemptFromNCP) NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
+        
+        
+        return simulatedbreak.isCancelled();
+    }
     
     
     @EventHandler(priority = EventPriority.LOWEST)
@@ -85,20 +119,10 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         if (player.getGameMode() == GameMode.CREATIVE) return;//players in creative destroy blocks, they don't mine them.
         if(!player.hasPermission("miningtrophies.canberewarded")) return;//can't get rewards
         
-        org.bukkit.plugin.PluginManager pm = getServer().getPluginManager();
-        pm.callEvent(new PlayerAnimationEvent(player));
-        pm.callEvent(new BlockDamageEvent(player, block, player.getEquipment().getItemInMainHand(), true));
-        SimulatedBlockBreakEvent simulatedbreak = new SimulatedBlockBreakEvent(block, player);
-        pm.callEvent(simulatedbreak);
-
-        if (simulatedbreak.isCancelled()) {
+        if(!simlateBlockBreak(player, block)){
             event.setCancelled(true);
             return;
         }
-        
-        
-        
-        
         
         ItemStack tool = player.getEquipment().getItemInMainHand();
         double fortunerate=1;
