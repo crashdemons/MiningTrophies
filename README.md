@@ -32,6 +32,7 @@ Clay | "Pure Clay" | named clay ball with enchanted appearance
 Glowstone | "Burning Glowstone" | named glowstone dust with enchanted appearance
 Turtle Egg | "Scute of Shame" | named scute with enchanted appearance and description
 Glass | "What-a-Pane" | named glass pane with enchanted appearance and description - for griefers
+Coal Ore | "Fuming Coal" | named coal with enchanted appearance (added in 0.6.6-SNAPSHOT)
 
 ## Permissions
  * `miningtrophies.config.reload` allows using the reload command (default: ops)
