@@ -154,8 +154,11 @@ public class MiningTrophies extends JavaPlugin implements Listener{
             return;
         }
         
+        boolean addenchants=getConfig().getBoolean("addenchants");
+        boolean addeffects=getConfig().getBoolean("addeffects");
+        boolean addlore=getConfig().getBoolean("addlore");
         
-        ItemStack item = type.createDrop();
+        ItemStack item = type.createDrop(addenchants,addeffects,addlore);
         
         BlockDropTrophyEvent trophyEvent = new BlockDropTrophyEvent(block,player,item);
         getServer().getPluginManager().callEvent(trophyEvent);

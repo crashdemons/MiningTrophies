@@ -10,3 +10,10 @@ claydroprate: 0.0001
 turtleeggdroprate: 0.0001
 glassdroprate: 0.0001
 coaloredroprate: 0.0001
+sealanterndroprate: 0.0001
+icedroprate: 0.0001
+
+addenchants: true
+addeffects: true
+addlore: true
+
