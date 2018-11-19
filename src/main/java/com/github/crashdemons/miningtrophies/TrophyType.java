@@ -30,7 +30,7 @@ public enum TrophyType {
     TURTLE_EGG("Scute of Shame",Material.SCUTE,"You know what you did.",Enchantment.WATER_WORKER),
     GLASS("What-a-pane",Material.GLASS_PANE,"For the experienced griefer."),
     COAL_ORE("Fuming Coal",Material.COAL),
-    SEA_LANTERN("Shimmering Shard",Material.PRISMARINE_SHARD,"Flickers with a strange energy.")
+    SEA_LANTERN("Singing Shard",Material.PRISMARINE_SHARD,"Hums with a strange energy.")
     ;
     
     private String dropName;
