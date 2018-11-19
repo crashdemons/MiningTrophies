@@ -87,12 +87,22 @@ public enum TrophyType {
         return getShortName()+"droprate";
     }
     
+    private static boolean isStainedGlassBlock(Material mat){//note: regular glass is not included and is a fallthrough/default for the glass trophy
+        if(mat.isBlock()){
+            String matname = mat.name().toUpperCase();
+            return matname.contains("STAINED_GLASS") && !matname.contains("PANE");
+        }
+        return false;
+    }
+    
+    
     /**
      * Get the trophytype corresponding to a provided block material
      * @param mat the material of a block to drop a trophy when mined
      * @return The type of trophy for that block material, or null if none was found.
      */
     public static TrophyType get(Material mat){
+        if(isStainedGlassBlock(mat)) mat=Material.GLASS;//consider all glass blocks as normal glass blocks.
         TrophyType type;
         try{
             type = valueOf(mat.name().toUpperCase());
