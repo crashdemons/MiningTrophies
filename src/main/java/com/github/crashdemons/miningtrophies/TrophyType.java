@@ -29,7 +29,9 @@ public enum TrophyType {
     GLOWSTONE("Burning Glowstone",Material.GLOWSTONE_DUST,Enchantment.FIRE_ASPECT),
     TURTLE_EGG("Scute of Shame",Material.SCUTE,"You know what you did.",Enchantment.WATER_WORKER),
     GLASS("What-a-pane",Material.GLASS_PANE,"For the experienced griefer."),
-    COAL_ORE("Fuming Coal",Material.COAL);
+    COAL_ORE("Fuming Coal",Material.COAL),
+    SEA_LANTERN("Shimmering Shard",Material.PRISMARINE_SHARD,"Flickers with a strange energy.")
+    ;
     
     private String dropName;
     private String dropLore;
