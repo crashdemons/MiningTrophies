@@ -127,6 +127,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         boolean droprollSuccess = droproll < droprateEffective;
         TrophyRollEvent rollEvent = new TrophyRollEvent(player,block,playerAlwaysRewarded,fortunerate,droprollOriginal,droproll,droprateOriginal,droprateEffective,droprollSuccess);
+        getServer().getPluginManager().callEvent(rollEvent);
         if(!rollEvent.succeeded()){//bad roll
             //getLogger().info("Roll wasn't lucky");
             return;
