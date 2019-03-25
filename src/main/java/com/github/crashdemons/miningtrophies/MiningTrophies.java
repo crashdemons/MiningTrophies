@@ -7,6 +7,7 @@ package com.github.crashdemons.miningtrophies;
 
 import com.github.crashdemons.miningtrophies.events.BlockDropTrophyEvent;
 import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
+import com.github.crashdemons.miningtrophies.events.TrophyRollEvent;
 import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 import java.util.Random;
@@ -115,11 +116,18 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         
         //check drop rates
-        Double droproll = rand.nextDouble();
-        Double droprate = getConfig().getDouble( type.getDropConfigName() );
-        if(droprate==0.0) return;
-        if(player.hasPermission("miningtrophies.alwaysrewarded")) droproll=0.00;//this player always gets good rolls.
-        if(droproll >= (droprate*fortunerate)){//bad roll
+        Double droprollOriginal = rand.nextDouble();
+        Double droproll = droprollOriginal;
+        Double droprateOriginal = getConfig().getDouble( type.getDropConfigName() );
+        Double droprateEffective = droprateOriginal;
+        if(droprateEffective==0.0) return;
+        boolean playerAlwaysRewarded = player.hasPermission("miningtrophies.alwaysrewarded");
+        if(playerAlwaysRewarded) droproll=0.00;//this player always gets good rolls.
+        droprateEffective *= fortunerate;
+        
+        boolean droprollSuccess = droproll < droprateEffective;
+        TrophyRollEvent rollEvent = new TrophyRollEvent(player,block,playerAlwaysRewarded,fortunerate,droprollOriginal,droproll,droprateOriginal,droprateEffective,droprollSuccess);
+        if(!rollEvent.succeeded()){//bad roll
             //getLogger().info("Roll wasn't lucky");
             return;
         }
