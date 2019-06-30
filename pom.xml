@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14-pre5-SNAPSHOT</version>
+            <version>1.14.3-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -120,6 +120,7 @@
                 <configuration>
                     <includes>
                         <include>org.bukkit</include>
+                        <include>org.spigotmc</include>
                     </includes>
                 </configuration>
                 <executions>
