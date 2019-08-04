@@ -131,6 +131,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
                
 
                 ItemStack item = createTrophyDrop(type);
+                item.setAmount(amount);
                 InventoryManager.addItem(player, item);
                 sender.sendMessage(targetMessage+"Gave "+amount+" "+type.getDropName());
         }
