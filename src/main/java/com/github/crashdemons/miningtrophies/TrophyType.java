@@ -60,6 +60,10 @@ public enum TrophyType {
         dropLore=lore;
     }
     
+    public String getDropName(){
+        return dropName;
+    }
+    
     /**
      * Get the material of the block that would drop this trophy
      * @return the block material
