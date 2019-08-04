@@ -10,29 +10,38 @@ website: https://github.com/crashdemons
 
 
 commands:
-  MiningTrophies:
-    description: Spawn a miningtrophie or edit miningtrophies config
-    aliases: [mt,miningtrophy]
+    MiningTrophies:
+        usage: "/<command> <reload|give> [ore_block amount [targetuuser]]"
+        description: Spawn a miningtrophie or edit miningtrophies config
+        aliases: [mt,miningtrophy]
     
 permissions:
-  miningtrophies.*:
-    description: Gives all MiningTrophies permissions
-    default: false
-    children:
-      miningtrophies.config.*: true
-      miningtrophies.canberewarded: true
-      miningtrophies.alwaysrewarded: true
-  miningtrophies.config.*:
-    description: Allows user to edit, save, or reload configs
-    default: op
-    children:
-      miningtrophies.config.reload: true
-  miningtrophies.config.reload:
-    description: Allows user to reload configs
-    default: op
-  miningtrophies.canberewarded:
-    description: User can be rewarded for mining with trophies
-    default: true
-  miningtrophies.alwaysrewarded:
-    description: Ignore drop rate for trophies and drop 100% of the time
-    default: false
+    miningtrophies.*:
+        description: Gives all MiningTrophies permissions
+        default: false
+        children:
+            miningtrophies.config.*: true
+            miningtrophies.give: true
+            miningtrophies.give.other: true
+            miningtrophies.canberewarded: true
+            miningtrophies.alwaysrewarded: true
+    miningtrophies.config.*:
+        description: Allows user to edit, save, or reload configs
+        default: op
+        children:
+            miningtrophies.config.reload: true
+    miningtrophies.config.reload:
+        description: Allows user to reload configs
+        default: op
+    miningtrophies.give:
+        description: permission to get trophies with a command
+        default: op
+    miningtrophies.give.other:
+        description: permission to get trophies with a command
+        default: op
+    miningtrophies.canberewarded:
+        description: User can be rewarded for mining with trophies
+        default: true
+    miningtrophies.alwaysrewarded:
+        description: Ignore drop rate for trophies and drop 100% of the time
+        default: false

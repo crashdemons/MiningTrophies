@@ -11,6 +11,7 @@ import com.github.crashdemons.miningtrophies.events.TrophyRollEvent;
 import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 import java.util.Random;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -68,11 +69,73 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         getLogger().info("Disabled.");
     }
     
+    public ItemStack createTrophyDrop(TrophyType type){
+        boolean addenchants=getConfig().getBoolean("addenchants");
+        boolean addeffects=getConfig().getBoolean("addeffects");
+        boolean addlore=getConfig().getBoolean("addlore");
+        return type.createDrop(addenchants,addeffects,addlore);
+    }
+    
+    
         @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!cmd.getName().equalsIgnoreCase("MiningTrophies")) {
             return false;
         }
+        // [reload|give] [args]
+        if(args.length<1) return false;
+        String subcommand = args[0];
+        
+        switch(subcommand.toLowerCase()){
+            case "reload":
+                if(!sender.hasPermission("miningtrophies.config.reload")){
+                    sender.sendMessage("You do not have permission to use this command.");
+                    return true;
+                }
+                reloadConfig();
+                sender.sendMessage("["+label+"] Reloaded config.");
+                return true;
+            case "give":
+                if(args.length<3) return false;//give trophy num [to]
+                if(!sender.hasPermission("miningtrophies.give")){
+                    sender.sendMessage("You do not have permission to use this command.");
+                    return true;
+                }
+                String targetMessage="";
+                CommandSender target = sender;
+              
+                TrophyType type;
+                try{
+                    type = TrophyType.valueOf(args[1].toUpperCase());
+                }catch(Exception e){
+                    sender.sendMessage("Unknown trophy type: "+args[1]);
+                    return true;
+                }
+                
+                int amount;
+                try{
+                    amount = Integer.valueOf(args[2]);
+                }catch(NumberFormatException e){
+                    sender.sendMessage("Invalid amount: "+args[2]);
+                    return true;
+                }
+                
+                if(args.length>=4 && sender.hasPermission("miningtrophies.give.other")){
+                    target = Bukkit.getPlayer(args[3]);
+                    if(target==null){  sender.sendMessage("Couldn't find player: "+args[3]); return true; }
+                    targetMessage = "("+args[3]+") ";
+                }
+                
+                if(!(target instanceof Player)){ sender.sendMessage(targetMessage+"Only players may receive trophy-items."); return true; }
+                Player player = (Player) target;
+               
+
+                ItemStack item = createTrophyDrop(type);
+                InventoryManager.addItem(player, item);
+                sender.sendMessage(targetMessage+"Gave "+amount+" "+type.getDropName());
+        }
+        
+        
         if(!sender.hasPermission("miningtrophies.config.reload")){
             sender.sendMessage("You do not have permission to use this command.");
             return true;
@@ -163,11 +226,8 @@ public class MiningTrophies extends JavaPlugin implements Listener{
             return;
         }
         
-        boolean addenchants=getConfig().getBoolean("addenchants");
-        boolean addeffects=getConfig().getBoolean("addeffects");
-        boolean addlore=getConfig().getBoolean("addlore");
         
-        ItemStack item = type.createDrop(addenchants,addeffects,addlore);
+        ItemStack item = createTrophyDrop(type);
         
         BlockDropTrophyEvent trophyEvent = new BlockDropTrophyEvent(block,player,item);
         getServer().getPluginManager().callEvent(trophyEvent);
