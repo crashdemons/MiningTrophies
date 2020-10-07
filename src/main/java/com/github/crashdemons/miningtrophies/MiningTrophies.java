@@ -25,8 +25,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -154,7 +156,23 @@ public class MiningTrophies extends JavaPlugin implements Listener{
     }
     
     
-
+    @EventHandler(ignoreCancelled=true,priority=EventPriority.LOWEST)
+    public void onBlockPlace(BlockPlaceEvent event){
+        ItemStack item = event.getItemInHand();
+        if(item==null || item.getType().isAir()) return;
+        if(!item.hasItemMeta()) return;
+        ItemMeta meta = item.getItemMeta();
+        if(!meta.hasLore()) return;
+        
+        if(!getConfig().getBoolean("disableplacement")) return;
+        
+        for(String line : meta.getLore()){
+            if(line.contains("Mining Trophy")){
+                event.setCancelled(true);
+                return;
+            }
+        }
+    }
 
     @EventHandler(ignoreCancelled=true, priority = EventPriority.LOWEST)
     public void onBlockBreakEvent(BlockBreakEvent event){

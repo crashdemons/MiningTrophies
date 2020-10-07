@@ -17,3 +17,5 @@ addenchants: true
 addeffects: true
 addlore: true
 
+disableplacement: true
+
