@@ -153,10 +153,10 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         return false;
     }
     
+    
 
-    
-    
-    @EventHandler(priority = EventPriority.LOWEST)
+
+    @EventHandler(ignoreCancelled=true, priority = EventPriority.LOWEST)
     public void onBlockBreakEvent(BlockBreakEvent event){
         if(event instanceof SimulatedBlockBreakEvent) return;
         Block block = event.getBlock();
