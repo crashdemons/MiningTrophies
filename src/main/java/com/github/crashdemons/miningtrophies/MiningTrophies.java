@@ -10,14 +10,18 @@ import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
 import com.github.crashdemons.miningtrophies.events.TrophyRollEvent;
 import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
+import java.util.Formatter;
+import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -254,6 +258,33 @@ public class MiningTrophies extends JavaPlugin implements Listener{
             //getLogger().info("Trophy event cancelled.");
             return;
         }
+        
+        
+        //broadcast message about the trophy - rouugh code adapted from PH, needs ironing out
+        FileConfiguration configFile = getConfig();
+        if (configFile.getBoolean("broadcast")) {
+            String message = player.getDisplayName()+" found a "+type.getDropName()+".";
+
+            int broadcastRange = configFile.getInt("broadcastrange");
+            if (broadcastRange > 0) {
+                broadcastRange *= broadcastRange;
+                Location location = player.getLocation();
+                List<Player> players = player.getWorld().getPlayers();
+
+                for (Player loopPlayer : players) {
+                    try{
+                        if (location.distanceSquared(loopPlayer.getLocation()) <= broadcastRange) {
+                            loopPlayer.sendMessage(message);
+                        }
+                    }catch(IllegalArgumentException e){
+                        //entities are in different worlds
+                    }
+                }
+            } else {
+                getServer().broadcastMessage(message);
+            }
+        }
+        
         
         Location location = block.getLocation();
         
