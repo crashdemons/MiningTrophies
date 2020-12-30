@@ -19,3 +19,5 @@ addlore: true
 
 disableplacement: true
 
+broadcast: true
+broadcastrange: 25
