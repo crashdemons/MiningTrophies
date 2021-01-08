@@ -174,7 +174,7 @@ public enum TrophyType {
     
     public List<String> getLore(){
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.RESET+""+ChatColor.DARK_PURPLE+ChatColor.ITALIC+dropLore);
+        if(!dropLore.isEmpty()) lore.add(ChatColor.RESET+""+ChatColor.DARK_PURPLE+ChatColor.ITALIC+dropLore);
         lore.add(getIdentifyingLore());
         return lore;
     }
