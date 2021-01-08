@@ -21,3 +21,5 @@ disableplacement: true
 
 broadcast: true
 broadcastrange: 25
+
+fixdroppedtrophies: true
