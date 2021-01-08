@@ -6,6 +6,7 @@
 package com.github.crashdemons.miningtrophies;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -44,6 +45,10 @@ public enum TrophyType {
     private Material dropMaterial;
     private Enchantment dropEnchantment;
     private static final int TPS=20;
+    
+    
+    private static HashMap<String,TrophyType> loreReference = new HashMap<>();
+    
     
     TrophyType(String displayName, Material mat){
         this(displayName,mat,Enchantment.LOOT_BONUS_BLOCKS);
@@ -138,10 +143,39 @@ public enum TrophyType {
      */
     public ItemStack createDrop(){ return createDrop(true,true,true); }
     
+   public String getIdentifyingLore(){
+        return ChatColor.RESET+""+ChatColor.DARK_PURPLE+getBlockName()+" "+ChatColor.BLUE+""+ChatColor.ITALIC+"Mining Trophy";
+    }
+   
+   
+   private static void createLoreCache(){
+        for(TrophyType type : TrophyType.values()){
+            loreReference.put(type.getIdentifyingLore(),type);
+        }
+   }
+   public static TrophyType identifyTrophyLore(String loreLine){
+       return loreReference.get(loreLine);
+   }
+   public static TrophyType identifyTrophyItem(ItemStack stack){
+        synchronized(loreReference){
+            if(loreReference.isEmpty()) createLoreCache();
+        }
+        if(!stack.hasItemMeta()) return null;
+        ItemMeta meta = stack.getItemMeta();
+        if(!meta.hasLore()) return null;
+        List<String> lore = meta.getLore();
+        for(String loreLine : lore){
+            loreLine = ChatColor.stripColor(loreLine);
+            TrophyType type = identifyTrophyLore(loreLine);
+            if(type!=null) return type;
+        }
+        return null;
+    }
+    
     public List<String> getLore(){
         ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.RESET+""+ChatColor.DARK_PURPLE+ChatColor.ITALIC+dropLore);
-        lore.add(ChatColor.RESET+""+ChatColor.DARK_PURPLE+getBlockName()+" "+ChatColor.BLUE+""+ChatColor.ITALIC+"Mining Trophy");
+        lore.add(getIdentifyingLore());
         return lore;
     }
     
