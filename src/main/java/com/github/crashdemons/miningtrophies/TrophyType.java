@@ -6,6 +6,7 @@
 package com.github.crashdemons.miningtrophies;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -137,6 +138,13 @@ public enum TrophyType {
      */
     public ItemStack createDrop(){ return createDrop(true,true,true); }
     
+    public List<String> getLore(){
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add(ChatColor.RESET+""+ChatColor.DARK_PURPLE+ChatColor.ITALIC+dropLore);
+        lore.add(ChatColor.RESET+""+ChatColor.DARK_PURPLE+getBlockName()+" "+ChatColor.BLUE+""+ChatColor.ITALIC+"Mining Trophy");
+        return lore;
+    }
+    
     /**
      * Creates a new itemstack of this trophy type
      * @param addenchants controls whether to add default enchantments to the trophy item
@@ -151,11 +159,7 @@ public enum TrophyType {
         
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + dropName);
         if(addlore){
-            ArrayList<String> lore = new ArrayList<>();
-            lore.add(ChatColor.RESET+""+ChatColor.ITALIC+dropLore);
-            lore.add("");
-            lore.add(ChatColor.RESET+getBlockName()+" "+ChatColor.BLUE+""+ChatColor.ITALIC+"Mining Trophy");
-            meta.setLore(lore);
+            meta.setLore(getLore());
         }
         if(addenchants) meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         if(dropMaterial==Material.POTION){
