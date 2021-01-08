@@ -182,6 +182,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
     
     @EventHandler(ignoreCancelled=true,priority=EventPriority.LOWEST)
     public void onItemSpawn(ItemSpawnEvent event){
+        if(!getConfig().getBoolean("fixdroppedtrophies")) return;
         Item entity = event.getEntity();
         ItemStack stack = entity.getItemStack();
         TrophyType type = TrophyType.identifyTrophyItem(stack);
