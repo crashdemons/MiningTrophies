@@ -5,6 +5,7 @@
  */
 package com.github.crashdemons.miningtrophies;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,22 +151,28 @@ public enum TrophyType {
    
    private static void createLoreCache(){
         for(TrophyType type : TrophyType.values()){
-            loreReference.put(type.getIdentifyingLore(),type);
+            String strippedLore = ChatColor.stripColor(type.getIdentifyingLore());
+            loreReference.put(strippedLore,type);
         }
    }
+
    public static TrophyType identifyTrophyLore(String loreLine){
+       loreLine = ChatColor.stripColor(loreLine);
        return loreReference.get(loreLine);
    }
    public static TrophyType identifyTrophyItem(ItemStack stack){
         synchronized(loreReference){
             if(loreReference.isEmpty()) createLoreCache();
         }
-        if(!stack.hasItemMeta()) return null;
+        if(!stack.hasItemMeta()){
+            return null;
+        }
         ItemMeta meta = stack.getItemMeta();
-        if(!meta.hasLore()) return null;
+        if(!meta.hasLore()){
+            return null;
+        }
         List<String> lore = meta.getLore();
         for(String loreLine : lore){
-            loreLine = ChatColor.stripColor(loreLine);
             TrophyType type = identifyTrophyLore(loreLine);
             if(type!=null) return type;
         }
