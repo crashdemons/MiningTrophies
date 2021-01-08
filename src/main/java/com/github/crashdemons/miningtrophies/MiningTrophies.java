@@ -10,11 +10,10 @@ import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
 import com.github.crashdemons.miningtrophies.events.TrophyRollEvent;
 import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
-import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,6 +22,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,6 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -68,6 +69,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         getLogger().info("Enabled.");
         
     }
+
     @Override
     public void onDisable(){
         getLogger().info("Disabling...");
@@ -176,6 +178,16 @@ public class MiningTrophies extends JavaPlugin implements Listener{
                 return;
             }
         }
+    }
+    
+    @EventHandler(ignoreCancelled=true,priority=EventPriority.LOWEST)
+    public void onItemSpawn(ItemSpawnEvent event){
+        Item entity = event.getEntity();
+        ItemStack stack = entity.getItemStack();
+        TrophyType type = TrophyType.identifyTrophyItem(stack);
+        if(type==null) return;
+        entity.setItemStack(createTrophyDrop(type));
+        
     }
 
     @EventHandler(ignoreCancelled=true, priority = EventPriority.LOWEST)
