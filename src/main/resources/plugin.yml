@@ -14,12 +14,13 @@ commands:
         usage: "/<command> <reload|give> [ore_block amount [targetuuser]]"
         description: Spawn a miningtrophie or edit miningtrophies config
         aliases: [mt,miningtrophy]
-    
+        permission: miningtrophies.command
 permissions:
     miningtrophies.*:
         description: Gives all MiningTrophies permissions
         default: false
         children:
+            miningtrophies.command: true
             miningtrophies.config.*: true
             miningtrophies.give: true
             miningtrophies.give.other: true
@@ -30,6 +31,9 @@ permissions:
         default: op
         children:
             miningtrophies.config.reload: true
+    miningtrophies.command:
+        description: Allows access to the miningtrophies command at all
+        default: op
     miningtrophies.config.reload:
         description: Allows user to reload configs
         default: op
