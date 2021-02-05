@@ -187,9 +187,14 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         ItemStack stack = entity.getItemStack();
         TrophyType type = TrophyType.identifyTrophyItem(stack);
         if(type==null) return;
+        
+        int oldAmount = stack.getAmount();
+        
         ItemStack newStack = createTrophyDrop(type);
         if(newStack==null){ getLogger().warning("replacement trophy item was null!"); return; }
         if(newStack.getType().isAir()){getLogger().warning("replacement trophy item was air!"); return; }
+        
+        newStack.setAmount(oldAmount);
         entity.setItemStack(newStack);
         
     }
