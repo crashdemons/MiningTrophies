@@ -10,7 +10,6 @@ import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
 import com.github.crashdemons.miningtrophies.events.TrophyRollEvent;
 import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
@@ -31,7 +30,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
@@ -319,5 +321,34 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         location.getWorld().dropItemNaturally(location, item);
         
     }
+    
+    @EventHandler
+    public void onGrindstone(InventoryClickEvent event) {
+        Inventory clickedInventory = event.getClickedInventory();
+        if(clickedInventory==null) return;
+        if (clickedInventory.getType() == InventoryType.GRINDSTONE && event.getSlotType() == InventoryType.SlotType.RESULT) {
+            ItemStack currentStack = event.getCurrentItem();
+            if(currentStack==null){
+                return;
+            }
+            TrophyType type = TrophyType.identifyTrophyItem(currentStack);
+            if(type==null){//not a trophy
+                return;
+            }
+            
+            currentStack.setItemMeta(null);//clear trophy lore/meta
+            event.setCurrentItem(currentStack);//set the item in the event
+            event.getClickedInventory().setItem(event.getSlot(), currentStack);//set the item in the menu
+            
+            if(event.getWhoClicked() instanceof Player){//make sure the player sees what we changed
+                Player p = (Player) event.getWhoClicked();
+                p.updateInventory();
+            }
+            
+            //event.setResult(Event.Result.DENY);// can be used to block the grindstone-ing if we need
+        }
+    }
+ 
+    
     
 }
