@@ -125,9 +125,9 @@ public enum TrophyType {
             String matname = mat.name().toUpperCase();
             if(matname.startsWith("DEEPSLATE_")){
                 matname = matname.substring("DEEPSLATE_".length());
-            }else if(matname.startsWith("NETHER_")){
+            }/*else if(matname.startsWith("NETHER_")){
                  matname = matname.substring("NETHER_".length());
-            }
+            }*/
             try{
                 return Material.valueOf(matname);
             }catch(Exception e){

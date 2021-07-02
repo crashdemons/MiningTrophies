@@ -28,7 +28,7 @@ public class TrophyTypeTest {
         act = Material.GOLD_ORE;
         assertEquals(exp,act);
         exp = TrophyType.resolveOreVariant(Material.NETHER_GOLD_ORE);
-        act = Material.GOLD_ORE;
+        act = Material.NETHER_GOLD_ORE;
         assertEquals(exp,act);
         exp = TrophyType.resolveOreVariant(Material.NETHER_QUARTZ_ORE);
         act = Material.NETHER_QUARTZ_ORE;
