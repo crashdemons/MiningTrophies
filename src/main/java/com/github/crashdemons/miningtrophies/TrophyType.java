@@ -120,6 +120,23 @@ public enum TrophyType {
         return false;
     }
     
+    public static Material resolveOreVariant(Material mat){
+        if(mat.isBlock()){
+            String matname = mat.name().toUpperCase();
+            if(matname.startsWith("DEEPSLATE_")){
+                matname = matname.substring("DEEPSLATE_".length());
+            }else if(matname.startsWith("NETHER_")){
+                 matname = matname.substring("NETHER_".length());
+            }
+            try{
+                return Material.valueOf(matname);
+            }catch(Exception e){
+                return mat;
+            }
+        }
+        return mat;
+    }
+    
     
     /**
      * Get the trophytype corresponding to a provided block material
@@ -129,6 +146,9 @@ public enum TrophyType {
     public static TrophyType get(Material mat){
         if(isStainedGlassBlock(mat)) mat=Material.GLASS;//consider all glass blocks as normal glass blocks.
         if(isIceVariant(mat)) mat=Material.ICE;
+        mat = resolveOreVariant(mat);
+        
+        
         TrophyType type;
         try{
             type = valueOf(mat.name().toUpperCase());
