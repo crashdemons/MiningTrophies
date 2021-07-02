@@ -26,19 +26,25 @@ import org.bukkit.potion.PotionEffectType;
  * Note: generally each enum entry should correspond to a Material type of a block that can be broken.
  * @author crash
  */
-public enum TrophyType {
+public enum TrophyType {    
+    IRON_ORE("Meteoric Iron",Material.RAW_IRON),
+    GOLD_ORE("Cursed Gold",Material.RAW_GOLD),
+    COPPER_ORE("Azurite Copper",Material.RAW_COPPER),
+    AMETHYST_CLUSTER("Charged Amethyst",Material.AMETHYST_SHARD),
+    
+    
     DIAMOND_ORE("Perfect Diamond",Material.DIAMOND),
     EMERALD_ORE("Perfect Emerald",Material.EMERALD),
     REDSTONE_ORE("Sparking Redstone",Material.REDSTONE),
     LAPIS_ORE("Marbled Lapis",Material.LAPIS_LAZULI),
     NETHER_QUARTZ_ORE("Rose-Quartz",Material.QUARTZ),
-    CLAY("Pure Clay",Material.CLAY_BALL),
-    GLOWSTONE("Burning Glowstone",Material.GLOWSTONE_DUST,Enchantment.FIRE_ASPECT),
-    TURTLE_EGG("Scute of Shame",Material.SCUTE,"You know what you did.",Enchantment.WATER_WORKER),
-    GLASS("What-a-pane",Material.GLASS_PANE,"For the experienced griefer."),
+    //CLAY("Pure Clay",Material.CLAY_BALL),
+    //GLOWSTONE("Burning Glowstone",Material.GLOWSTONE_DUST,Enchantment.FIRE_ASPECT),
+    //TURTLE_EGG("Scute of Shame",Material.SCUTE,"You know what you did.",Enchantment.WATER_WORKER),
+    //GLASS("What-a-pane",Material.GLASS_PANE,"For the experienced griefer."),
     COAL_ORE("Fuming Coal",Material.COAL),
-    SEA_LANTERN("Singing Shard",Material.PRISMARINE_SHARD,"Hums with a strange energy."),
-    ICE("Shimmering Water",Material.POTION)
+    //SEA_LANTERN("Singing Shard",Material.PRISMARINE_SHARD,"Hums with a strange energy."),
+    //ICE("Shimmering Water",Material.POTION)
     ;
     
     private String dropName;

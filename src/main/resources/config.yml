@@ -23,3 +23,9 @@ broadcast: true
 broadcastrange: 25
 
 fixdroppedtrophies: true
+
+ironoredroprate: 0.0001
+goldoredroprate: 0.0001
+copperoredroprate: 0.0001
+amethystclusterdroprate: 0.0001
+
