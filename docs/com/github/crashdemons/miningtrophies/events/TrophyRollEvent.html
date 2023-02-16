@@ -176,6 +176,15 @@ extends org.bukkit.event.block.BlockEvent</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../com/github/crashdemons/miningtrophies/events/TrophyRollEvent.html#TrophyRollEvent-org.bukkit.entity.Entity-org.bukkit.block.Block-boolean-double-double-">TrophyRollEvent</a></span>(org.bukkit.entity.Entity&nbsp;miner,
+               org.bukkit.block.Block&nbsp;target,
+               boolean&nbsp;minerAlwaysRewarded,
+               double&nbsp;originalDropRoll,
+               double&nbsp;originalDropRate)</code>
+<div class="block">Creates the Trophy dropchance event for MiningTrophies.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../com/github/crashdemons/miningtrophies/events/TrophyRollEvent.html#TrophyRollEvent-org.bukkit.entity.Entity-org.bukkit.block.Block-boolean-double-double-double-double-boolean-">TrophyRollEvent</a></span>(org.bukkit.entity.Entity&nbsp;miner,
                org.bukkit.block.Block&nbsp;target,
                boolean&nbsp;minerAlwaysRewarded,
@@ -187,7 +196,7 @@ extends org.bukkit.event.block.BlockEvent</pre>
 <div class="block">Creates the Trophy dropchance event for MiningTrophies.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../com/github/crashdemons/miningtrophies/events/TrophyRollEvent.html#TrophyRollEvent-org.bukkit.entity.Entity-org.bukkit.block.Block-boolean-double-double-double-double-double-boolean-">TrophyRollEvent</a></span>(org.bukkit.entity.Entity&nbsp;miner,
                org.bukkit.block.Block&nbsp;target,
                boolean&nbsp;minerAlwaysRewarded,
@@ -445,6 +454,28 @@ extends org.bukkit.event.block.BlockEvent</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="TrophyRollEvent-org.bukkit.entity.Entity-org.bukkit.block.Block-boolean-double-double-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TrophyRollEvent</h4>
+<pre>public&nbsp;TrophyRollEvent(org.bukkit.entity.Entity&nbsp;miner,
+                       org.bukkit.block.Block&nbsp;target,
+                       boolean&nbsp;minerAlwaysRewarded,
+                       double&nbsp;originalDropRoll,
+                       double&nbsp;originalDropRate)</pre>
+<div class="block">Creates the Trophy dropchance event for MiningTrophies.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>miner</code> - the Entity mining the block</dd>
+<dd><code>target</code> - the Block being mined</dd>
+<dd><code>minerAlwaysRewarded</code> - whether the miner has the always-rewarded permission</dd>
+<dd><code>originalDropRoll</code> - the randomized PRNG double droproll value inclusively between 0 to 1.</dd>
+<dd><code>originalDropRate</code> - the configured droprate of the target as a fraction (0.01 = 1%)</dd>
+</dl>
+</li>
+</ul>
 <a name="TrophyRollEvent-org.bukkit.entity.Entity-org.bukkit.block.Block-boolean-double-double-double-double-boolean-">
 <!--   -->
 </a>

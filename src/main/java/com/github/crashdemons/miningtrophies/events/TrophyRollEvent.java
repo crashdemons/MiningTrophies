@@ -47,10 +47,7 @@ public class TrophyRollEvent extends BlockEvent {
      * @param target the Block being mined
      * @param minerAlwaysRewarded whether the miner has the always-rewarded permission
      * @param originalDropRoll the randomized PRNG double droproll value inclusively between 0 to 1.
-     * @param effectiveDropRoll the modified droproll value after permission logic was applied (alwaysrewarded sets to 0)
      * @param originalDropRate the configured droprate of the target as a fraction (0.01 = 1%)
-     * @param effectiveDropRate the effective droprate of the target as a fraction (0.01 = 1%), as modified by fortune.
-     * @param dropSuccess whether the droproll was determined to be initially a successful roll.
      */
     public TrophyRollEvent(Entity miner, Block target, boolean minerAlwaysRewarded, double originalDropRoll, double originalDropRate) {
         super(target);
