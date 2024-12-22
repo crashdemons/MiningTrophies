@@ -45,6 +45,7 @@ public enum TrophyType {
     COAL_ORE("Fuming Coal",Material.COAL),
     //SEA_LANTERN("Singing Shard",Material.PRISMARINE_SHARD,"Hums with a strange energy."),
     //ICE("Shimmering Water",Material.POTION)
+    SPAWNER("Spawner Fragment",Material.CHAIN),
     ;
     
     private String dropName;
