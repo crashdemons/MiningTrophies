@@ -58,13 +58,13 @@ public enum TrophyType {
     
     
     TrophyType(String displayName, Material mat){
-        this(displayName,mat,Enchantment.LOOT_BONUS_BLOCKS);
+        this(displayName,mat,Enchantment.LOOTING);
     }
     TrophyType(String displayName,Material mat,Enchantment ench){
          this(displayName,mat,"",ench);
     }
     TrophyType(String displayName,Material mat,String lore){
-         this(displayName,mat,lore,Enchantment.LOOT_BONUS_BLOCKS);
+         this(displayName,mat,lore,Enchantment.LOOTING);
     }
     TrophyType(String displayName,Material mat,String lore,Enchantment ench){
         dropName=displayName;
@@ -230,7 +230,7 @@ public enum TrophyType {
         }
         if(addenchants) meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         if(dropMaterial==Material.POTION){
-            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
             PotionMeta potMeta = (PotionMeta) meta;
             potMeta.setColor(Color.BLUE);
             if(addeffects){

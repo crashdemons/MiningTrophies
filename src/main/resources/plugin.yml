@@ -2,7 +2,7 @@ name: MiningTrophies
 main: com.github.crashdemons.miningtrophies.MiningTrophies
 version: ${project.version}
 author: crashdemons
-api-version: 1.13
+api-version: 1.20
 description: Drops rare trophies from mining
 website: https://github.com/crashdemons
 

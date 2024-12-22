@@ -8,8 +8,6 @@ package com.github.crashdemons.miningtrophies;
 import com.github.crashdemons.miningtrophies.events.BlockDropTrophyEvent;
 import com.github.crashdemons.miningtrophies.events.SimulatedBlockBreakEvent;
 import com.github.crashdemons.miningtrophies.events.TrophyRollEvent;
-import fr.neatmonster.nocheatplus.checks.CheckType;
-import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.Bukkit;
@@ -220,7 +218,7 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         if (tool != null) {
             if(tool.getType()==Material.SHEARS) return;//shears are not permitted for trophies
             if(tool.getEnchantmentLevel(Enchantment.SILK_TOUCH)>0) return;//silk touch is not permitted to generate rewards
-            fortunerate = 1 + (getConfig().getDouble("fortunerate") * tool.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
+            fortunerate = 1 + (getConfig().getDouble("fortunerate") * tool.getEnchantmentLevel(Enchantment.LOOTING));
         }
         
         
@@ -245,23 +243,23 @@ public class MiningTrophies extends JavaPlugin implements Listener{
         
         PluginManager pm = getServer().getPluginManager();
         boolean wasExemptFromNCP = true;
-        if (NCPEnabled) {
+        /*if (NCPEnabled) {
             wasExemptFromNCP = NCPExemptionManager.isExempted(player, CheckType.BLOCKBREAK_FASTBREAK);
             //getLogger().info("NCP Exemption: "+wasExemptFromNCP);
             if (!wasExemptFromNCP){
                 //getLogger().info("NCP Exemption added");
                 NCPExemptionManager.exemptPermanently(player, CheckType.BLOCKBREAK_FASTBREAK);
             }
-        }
+        }*/
         pm.callEvent(new PlayerAnimationEvent(player));
         pm.callEvent(new BlockDamageEvent(player, block, player.getEquipment().getItemInMainHand(), true));
         SimulatedBlockBreakEvent simulatedbreak = new SimulatedBlockBreakEvent(block, player);
         pm.callEvent(simulatedbreak);
         
-        if (NCPEnabled && !wasExemptFromNCP){
+        /*if (NCPEnabled && !wasExemptFromNCP){
             NCPExemptionManager.unexempt(player, CheckType.BLOCKBREAK_FASTBREAK);
             //getLogger().info("NCP Exemption removed");
-        }
+        }*/
         
         
         
