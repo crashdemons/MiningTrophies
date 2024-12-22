@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.github.crashdemons.miningtrophies"},{"l":"com.github.crashdemons.miningtrophies.events"},{"l":"com.github.crashdemons.miningtrophies.modifiers"}];updateSearchResults();
